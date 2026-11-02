@@ -1,966 +1,1165 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeFlow | Visual Development Platform</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f9fbfd;
-        }
-        
-        h1, h2, h3, h4 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            line-height: 1.3;
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header & Navigation */
-        header {
-            background-color: #fff;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo-icon {
-            color: #4361ee;
-            font-size: 28px;
-            margin-right: 10px;
-        }
-        
-        .logo-text {
-            font-family: 'Poppins', sans-serif;
-            font-size: 24px;
-            font-weight: 700;
-            color: #333;
-        }
-        
-        .logo-text span {
-            color: #4361ee;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 30px;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: #555;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: #4361ee;
-        }
-        
-        .cta-button {
-            background-color: #4361ee;
-            color: white;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-        }
-        
-        .cta-button:hover {
-            background-color: #3a56d4;
-            transform: translateY(-2px);
-        }
-        
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: #333;
-            cursor: pointer;
-        }
-        
-        /* Hero Section */
-        .hero {
-            padding: 150px 0 100px;
-            background: linear-gradient(135deg, #f0f4ff 0%, #f9fbfd 100%);
-        }
-        
-        .hero-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .hero-text {
-            flex: 1;
-            padding-right: 40px;
-        }
-        
-        .hero-text h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: #222;
-        }
-        
-        .hero-text h1 span {
-            color: #4361ee;
-        }
-        
-        .hero-text p {
-            font-size: 18px;
-            color: #666;
-            margin-bottom: 30px;
-            max-width: 600px;
-        }
-        
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .secondary-button {
-            background-color: white;
-            color: #4361ee;
-            border: 2px solid #4361ee;
-            padding: 12px 28px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .secondary-button:hover {
-            background-color: #f0f4ff;
-        }
-        
-        .hero-image {
-            flex: 1;
-            text-align: center;
-        }
-        
-        .hero-image img {
-            max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 20px 40px rgba(67, 97, 238, 0.15);
-        }
-        
-        /* Features Section */
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        
-        .section-title h2 {
-            font-size: 36px;
-            color: #222;
-            margin-bottom: 15px;
-        }
-        
-        .section-title p {
-            color: #666;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
-        .features {
-            padding: 100px 0;
-            background-color: white;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
-        
-        .feature-card {
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .feature-icon {
-            background-color: #eef2ff;
-            color: #4361ee;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            font-size: 28px;
-        }
-        
-        .feature-card h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-        
-        .feature-card p {
-            color: #666;
-        }
-        
-        /* Benefits Section */
-        .benefits {
-            padding: 100px 0;
-            background-color: #f0f4ff;
-        }
-        
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-        
-        .benefit-item {
-            text-align: center;
-            padding: 30px 20px;
-        }
-        
-        .benefit-icon {
-            color: #4361ee;
-            font-size: 40px;
-            margin-bottom: 20px;
-        }
-        
-        .benefit-item h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-        
-        .benefit-item p {
-            color: #666;
-        }
-        
-        /* Testimonials */
-        .testimonials {
-            padding: 100px 0;
-            background-color: white;
-        }
-        
-        .testimonial-slider {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-        }
-        
-        .testimonial {
-            background: #f9fbfd;
-            padding: 40px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .testimonial-text {
-            font-size: 18px;
-            font-style: italic;
-            margin-bottom: 30px;
-            color: #555;
-        }
-        
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .author-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: #ddd;
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: #4361ee;
-            font-size: 24px;
-        }
-        
-        .author-info h4 {
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-        
-        .author-info p {
-            color: #777;
-            font-size: 14px;
-        }
-        
-        /* Pricing Section */
-        .pricing {
-            padding: 100px 0;
-            background-color: #f9fbfd;
-        }
-        
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-        
-        .pricing-card {
-            background: white;
-            border-radius: 10px;
-            padding: 40px 30px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        
-        .pricing-card.featured {
-            border-top: 5px solid #4361ee;
-            transform: scale(1.05);
-            position: relative;
-        }
-        
-        .featured-badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #4361ee;
-            color: white;
-            padding: 5px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-        
-        .pricing-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .pricing-card.featured:hover {
-            transform: scale(1.05) translateY(-10px);
-        }
-        
-        .plan-name {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: #333;
-        }
-        
-        .plan-price {
-            font-size: 48px;
-            font-weight: 700;
-            color: #4361ee;
-            margin-bottom: 20px;
-        }
-        
-        .plan-price span {
-            font-size: 16px;
-            color: #777;
-        }
-        
-        .plan-features {
-            list-style: none;
-            margin-bottom: 30px;
-        }
-        
-        .plan-features li {
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-            color: #555;
-        }
-        
-        .plan-features li:last-child {
-            border-bottom: none;
-        }
-        
-        /* CTA Section */
-        .cta-section {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #4361ee 0%, #3a56d4 100%);
-            text-align: center;
-            color: white;
-        }
-        
-        .cta-section h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-        
-        .cta-section p {
-            font-size: 18px;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            opacity: 0.9;
-        }
-        
-        .cta-section .cta-button {
-            background-color: white;
-            color: #4361ee;
-            font-size: 16px;
-            padding: 15px 40px;
-        }
-        
-        .cta-section .cta-button:hover {
-            background-color: #f0f4ff;
-        }
-        
-        /* Footer */
-        footer {
-            background-color: #222;
-            color: #ccc;
-            padding: 70px 0 20px;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-bottom: 50px;
-        }
-        
-        .footer-column h3 {
-            font-size: 20px;
-            color: white;
-            margin-bottom: 25px;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-        
-        .footer-links a {
-            color: #aaa;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: #4361ee;
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #444;
-            font-size: 14px;
-            color: #888;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .hero-content {
-                flex-direction: column;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solitude & Sunlight — Fragments of Everyday Life</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts: Newsreader (Editorial Serif) & Plus Jakarta Sans (Clean Modern Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;1,400&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Newsreader', 'Playfair Display', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            parchment: {
+              50: '#FAF8F5',
+              100: '#F4EFEA',
+              200: '#EBE3DA',
+              300: '#DDD2C4',
+              800: '#3D362F',
+              900: '#231F1C'
+            },
+            terracotta: {
+              DEFAULT: '#C86D51',
+              dark: '#A9553B',
+              light: '#F8EDE9'
+            },
+            olive: {
+              DEFAULT: '#6B705C',
+              light: '#A5A58D',
+              surface: '#F1F2EE'
+            },
+            twilight: {
+              base: '#181B19',
+              card: '#222724',
+              border: '#323934',
+              text: '#ECEBE4',
+              muted: '#9DA49E'
             }
-            
-            .hero-text {
-                padding-right: 0;
-                margin-bottom: 50px;
-                text-align: center;
-            }
-            
-            .hero-text p {
-                margin: 0 auto 30px;
-            }
-            
-            .pricing-card.featured {
-                transform: none;
-            }
-            
-            .pricing-card.featured:hover {
-                transform: translateY(-10px);
-            }
+          },
+          boxShadow: {
+            'soft': '0 8px 30px rgba(0,0,0,0.04)',
+            'polaroid': '0 10px 25px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.05)',
+          }
         }
-        
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .hero-text h1 {
-                font-size: 36px;
-            }
-            
-            .section-title h2 {
-                font-size: 30px;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .hero-buttons button {
-                width: 100%;
-                max-width: 300px;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .hero {
-                padding: 130px 0 80px;
-            }
-            
-            .features, .benefits, .testimonials, .pricing, .cta-section {
-                padding: 70px 0;
-            }
-            
-            .feature-card, .testimonial {
-                padding: 25px;
-            }
-            
-            .plan-price {
-                font-size: 36px;
-            }
-        }
-    </style>
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Smooth Scrollbar */
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F4EFEA;
+    }
+    .dark ::-webkit-scrollbar-track {
+      background: #181B19;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #DDD2C4;
+      border-radius: 6px;
+    }
+    .dark ::-webkit-scrollbar-thumb {
+      background: #323934;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #C86D51;
+    }
+
+    /* Paper Texture Grain Subtle Simulation */
+    .paper-texture {
+      background-image: radial-gradient(rgba(107, 112, 92, 0.04) 1px, transparent 0);
+      background-size: 24px 24px;
+    }
+    .dark .paper-texture {
+      background-image: radial-gradient(rgba(236, 235, 228, 0.03) 1px, transparent 0);
+      background-size: 24px 24px;
+    }
+
+    /* Polaroid rotation effects */
+    .polaroid-tilt-1 { transform: rotate(-1.5deg); }
+    .polaroid-tilt-2 { transform: rotate(1.2deg); }
+    .polaroid-tilt-3 { transform: rotate(-0.8deg); }
+    .polaroid-tilt-4 { transform: rotate(1.8deg); }
+  </style>
 </head>
-<body>
-    <!-- Header & Navigation -->
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">
-                    <div class="logo-icon"><i class="fas fa-bezier-curve"></i></div>
-                    <div class="logo-text">Code<span>Flow</span></div>
-                </div>
-                
-                <ul class="nav-links">
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#benefits">Benefits</a></li>
-                    <li><a href="#testimonials">Testimonials</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#">Resources</a></li>
-                </ul>
-                
-                <button class="cta-button">Start Free Trial</button>
-                <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
-            </nav>
-        </div>
-    </header>
+<body class="bg-parchment-50 text-parchment-900 dark:bg-twilight-base dark:text-twilight-text font-sans antialiased selection:bg-terracotta selection:text-white transition-colors duration-300 min-h-screen flex flex-col">
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Build Apps Faster With <span>Visual Development</span></h1>
-                    <p>CodeFlow empowers teams to create enterprise-grade applications with minimal coding. Drag, drop, and connect components to build powerful web and mobile apps in record time.</p>
-                    <div class="hero-buttons">
-                        <button class="cta-button">Start Building Free</button>
-                        <button class="secondary-button">Watch Demo</button>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="CodeFlow Platform Interface">
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- Top Announcement / Season Epigraph -->
+  <div class="border-b border-parchment-200 dark:border-twilight-border py-2 px-4 text-center text-xs tracking-widest uppercase font-sans text-olive dark:text-twilight-muted flex items-center justify-center gap-3">
+    <span class="w-1.5 h-1.5 rounded-full bg-terracotta animate-pulse"></span>
+    <span>Autumn Field Notes &bull; October 2026 Edition</span>
+    <span class="hidden md:inline text-parchment-300 dark:text-twilight-border">|</span>
+    <span class="hidden md:inline italic font-serif lowercase tracking-normal">"to pay attention, this is our endless and proper work."</span>
+  </div>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Powerful Features for Rapid Development</h2>
-                <p>CodeFlow provides all the tools you need to build, deploy, and scale applications without writing extensive code.</p>
-            </div>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-th-large"></i>
-                    </div>
-                    <h3>Visual Builder</h3>
-                    <p>Drag and drop UI components to design responsive interfaces. Connect data sources with simple point-and-click actions.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <h3>Database Integration</h3>
-                    <p>Connect to any data source with built-in connectors. Automatically generate CRUD operations without writing SQL.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>Cross-Platform</h3>
-                    <p>Build once, deploy everywhere. Generate applications for web, iOS, and Android from a single visual design.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3>Extensible with Code</h3>
-                    <p>Add custom functionality with JavaScript when needed. Our platform doesn't limit your creativity or complexity.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Enterprise Security</h3>
-                    <p>Built-in authentication, authorization, and data encryption. SOC2 compliant with enterprise-grade security features.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <h3>One-Click Deployment</h3>
-                    <p>Deploy to cloud or on-premises with a single click. Automatic scaling and monitoring included.</p>
-                </div>
-            </div>
+  <!-- Header Navigation -->
+  <header class="sticky top-0 z-40 backdrop-blur-md bg-parchment-50/90 dark:bg-twilight-base/90 border-b border-parchment-200 dark:border-twilight-border transition-colors">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo / Journal Monogram -->
+      <a href="#" class="group flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full border border-terracotta/40 dark:border-terracotta/60 flex items-center justify-center text-terracotta bg-terracotta-light/40 dark:bg-twilight-card transition-transform group-hover:scale-105">
+          <i data-lucide="sun" class="w-5 h-5"></i>
         </div>
-    </section>
-
-    <!-- Benefits Section -->
-    <section class="benefits" id="benefits">
-        <div class="container">
-            <div class="section-title">
-                <h2>Why Choose CodeFlow?</h2>
-                <p>Join thousands of companies accelerating their digital transformation with low-code development.</p>
-            </div>
-            
-            <div class="benefits-grid">
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3>10x Faster Development</h3>
-                    <p>Build applications in days instead of months with visual development tools.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-money-bill-wave"></i>
-                    </div>
-                    <h3>Reduce Costs by 70%</h3>
-                    <p>Lower development and maintenance costs with fewer resources required.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3>Citizen Developers</h3>
-                    <p>Enable business users to build solutions with minimal IT assistance.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>Scale Effortlessly</h3>
-                    <p>From prototype to enterprise-scale applications with the same platform.</p>
-                </div>
-            </div>
+        <div>
+          <span class="font-serif text-xl sm:text-2xl font-medium tracking-tight text-parchment-900 dark:text-white block -mb-1">
+            Solitude & Sunlight
+          </span>
+          <span class="text-[10px] tracking-widest uppercase text-olive dark:text-twilight-muted font-medium">
+            Daily Life & Slow Reflections
+          </span>
         </div>
-    </section>
+      </a>
 
-    <!-- Testimonials -->
-    <section class="testimonials" id="testimonials">
-        <div class="container">
-            <div class="section-title">
-                <h2>Trusted by Industry Leaders</h2>
-                <p>See what our customers have to say about their experience with CodeFlow.</p>
-            </div>
-            
-            <div class="testimonial-slider">
-                <div class="testimonial">
-                    <div class="testimonial-text">
-                        "CodeFlow transformed how we deliver solutions to our business units. What used to take 6 months now takes 3 weeks. Our development team can focus on complex problems while business teams build their own solutions."
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">SC</div>
-                        <div class="author-info">
-                            <h4>Sarah Chen</h4>
-                            <p>CTO, TechGrowth Inc.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:flex items-center gap-8 text-sm text-parchment-800 dark:text-twilight-muted">
+        <a href="#journal" class="hover:text-terracotta dark:hover:text-white transition-colors">Journal</a>
+        <a href="#rituals" class="hover:text-terracotta dark:hover:text-white transition-colors">Quiet Rituals</a>
+        <a href="#moments" class="hover:text-terracotta dark:hover:text-white transition-colors">Photo Log</a>
+        <a href="#tracker" class="hover:text-terracotta dark:hover:text-white transition-colors">Mindful Log</a>
+        <a href="#about" class="hover:text-terracotta dark:hover:text-white transition-colors">About</a>
+      </nav>
 
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <div class="section-title">
-                <h2>Simple, Transparent Pricing</h2>
-                <p>Choose the plan that fits your needs. All plans include core features with no hidden fees.</p>
-            </div>
-            
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3 class="plan-name">Starter</h3>
-                    <div class="plan-price">$29<span>/month</span></div>
-                    <ul class="plan-features">
-                        <li>Up to 5 users</li>
-                        <li>10 GB storage</li>
-                        <li>Basic components</li>
-                        <li>Community support</li>
-                        <li>1 production app</li>
-                    </ul>
-                    <button class="secondary-button">Get Started</button>
-                </div>
-                
-                <div class="pricing-card featured">
-                    <div class="featured-badge">Most Popular</div>
-                    <h3 class="plan-name">Professional</h3>
-                    <div class="plan-price">$89<span>/month</span></div>
-                    <ul class="plan-features">
-                        <li>Up to 25 users</li>
-                        <li>100 GB storage</li>
-                        <li>All components</li>
-                        <li>Priority support</li>
-                        <li>10 production apps</li>
-                        <li>Custom branding</li>
-                    </ul>
-                    <button class="cta-button">Try Free for 14 Days</button>
-                </div>
-                
-                <div class="pricing-card">
-                    <h3 class="plan-name">Enterprise</h3>
-                    <div class="plan-price">Custom</div>
-                    <ul class="plan-features">
-                        <li>Unlimited users</li>
-                        <li>Unlimited storage</li>
-                        <li>All features included</li>
-                        <li>24/7 dedicated support</li>
-                        <li>Unlimited apps</li>
-                        <li>On-premises option</li>
-                    </ul>
-                    <button class="secondary-button">Contact Sales</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <h2>Start Building Today</h2>
-            <p>Join over 10,000 companies that use CodeFlow to accelerate their application development. No credit card required for the free trial.</p>
-            <button class="cta-button">Get Started for Free</button>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <div class="logo">
-                        <div class="logo-icon"><i class="fas fa-bezier-curve"></i></div>
-                        <div class="logo-text">Code<span>Flow</span></div>
-                    </div>
-                    <p style="margin-top: 20px; color: #aaa;">The leading visual development platform for building enterprise applications with minimal coding.</p>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Product</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Pricing</a></li>
-                        <li><a href="#">Use Cases</a></li>
-                        <li><a href="#">Integrations</a></li>
-                        <li><a href="#">Roadmap</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Resources</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">Tutorials</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Community</a></li>
-                        <li><a href="#">Support</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Company</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>&copy; 2023 CodeFlow. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Mobile menu toggle
-        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-            
-            // Adjust for mobile
-            if (window.innerWidth <= 768) {
-                if (navLinks.style.display === 'flex') {
-                    navLinks.style.flexDirection = 'column';
-                    navLinks.style.position = 'absolute';
-                    navLinks.style.top = '80px';
-                    navLinks.style.left = '0';
-                    navLinks.style.width = '100%';
-                    navLinks.style.backgroundColor = 'white';
-                    navLinks.style.padding = '20px';
-                    navLinks.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
-                    
-                    const navItems = document.querySelectorAll('.nav-links li');
-                    navItems.forEach(item => {
-                        item.style.margin = '10px 0';
-                    });
-                }
-            }
-        });
+      <!-- Header Tools & Audio Toggle -->
+      <div class="flex items-center gap-2 sm:gap-3">
         
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Close mobile menu if open
-                    if(window.innerWidth <= 768) {
-                        document.querySelector('.nav-links').style.display = 'none';
-                    }
-                }
-            });
-        });
+        <!-- Ambient Sound Player Button (Synthesized Lo-Fi Rain) -->
+        <button 
+          id="ambientAudioBtn"
+          onclick="toggleAmbientAudio()" 
+          title="Toggle Warm Rain & Ambient Brown Noise"
+          class="flex items-center gap-2 px-3 py-1.5 rounded-full border border-parchment-200 dark:border-twilight-border bg-parchment-100/70 dark:bg-twilight-card text-xs text-parchment-800 dark:text-twilight-text hover:border-terracotta transition-all">
+          <i id="ambientAudioIcon" data-lucide="cloud-rain" class="w-3.5 h-3.5 text-olive dark:text-twilight-muted"></i>
+          <span id="ambientAudioText" class="hidden sm:inline font-serif italic text-[11px]">Rain Noise</span>
+        </button>
+
+        <!-- Search Bar Trigger Input -->
+        <div class="relative hidden sm:block w-36 lg:w-44">
+          <input 
+            type="text" 
+            id="searchInput"
+            placeholder="Search entries..."
+            oninput="handleSearch(this.value)"
+            class="w-full bg-parchment-100 dark:bg-twilight-card border border-parchment-200 dark:border-twilight-border rounded-full pl-8 pr-3 py-1 text-xs text-parchment-900 dark:text-white placeholder-parchment-400 dark:placeholder-twilight-muted focus:outline-none focus:border-terracotta transition-colors"
+          />
+          <i data-lucide="search" class="w-3.5 h-3.5 text-olive dark:text-twilight-muted absolute left-2.5 top-1/2 -translate-y-1/2"></i>
+        </div>
+
+        <!-- Mode Toggle (Warm Paper vs Muted Twilight) -->
+        <button 
+          onclick="toggleTheme()" 
+          class="p-2 rounded-full border border-parchment-200 dark:border-twilight-border bg-parchment-100 dark:bg-twilight-card text-parchment-800 dark:text-twilight-text hover:border-terracotta transition-colors" 
+          title="Toggle Warm Paper / Muted Twilight">
+          <i data-lucide="moon" class="w-4 h-4 hidden dark:block"></i>
+          <i data-lucide="sun-medium" class="w-4 h-4 block dark:hidden text-terracotta"></i>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <main class="flex-grow">
+    
+    <!-- Hero Editorial Section -->
+    <section class="border-b border-parchment-200 dark:border-twilight-border paper-texture py-16 sm:py-24">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-6">
         
-        // Simple testimonial slider
-        const testimonials = [
-            {
-                text: "CodeFlow transformed how we deliver solutions to our business units. What used to take 6 months now takes 3 weeks. Our development team can focus on complex problems while business teams build their own solutions.",
-                name: "Sarah Chen",
-                position: "CTO, TechGrowth Inc.",
-                initials: "SC"
-            },
-            {
-                text: "We reduced our app development time by 80% using CodeFlow. The visual interface made it easy for our analysts to build data dashboards without waiting for IT resources.",
-                name: "Marcus Johnson",
-                position: "Director of Operations, DataCorp",
-                initials: "MJ"
-            },
-            {
-                text: "As a non-technical founder, CodeFlow allowed me to build our MVP in just 2 months. I could test ideas quickly and iterate based on user feedback without deep coding knowledge.",
-                name: "Lisa Wang",
-                position: "Founder, StartupLabs",
-                initials: "LW"
-            }
-        ];
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-terracotta-light dark:bg-terracotta/10 text-terracotta text-xs tracking-wider uppercase font-medium">
+          <i data-lucide="coffee" class="w-3.5 h-3.5"></i>
+          <span>Personal Almanac of Simple Living</span>
+        </div>
+
+        <h1 class="font-serif text-3xl sm:text-5xl lg:text-6xl text-parchment-900 dark:text-white font-normal tracking-tight leading-tight">
+          Collecting the quiet moments <br class="hidden sm:inline" />
+          <span class="italic font-normal text-terracotta">before the sun slips beneath the sill.</span>
+        </h1>
+
+        <p class="font-sans text-sm sm:text-base text-parchment-800/80 dark:text-twilight-muted max-w-2xl mx-auto leading-relaxed">
+          Welcome to my digital desk. A sanctuary dedicated to morning pour-overs, rainy afternoon journals, 35mm film memories, and the gentle art of noticing what is right in front of us.
+        </p>
+
+        <!-- Current Life Status Note -->
+        <div class="pt-4 max-w-xl mx-auto">
+          <div class="p-4 rounded-2xl border border-parchment-200 dark:border-twilight-border bg-white/70 dark:bg-twilight-card/80 text-left flex items-start gap-3 shadow-soft backdrop-blur-sm">
+            <div class="p-2 rounded-xl bg-olive-surface dark:bg-twilight-base text-olive dark:text-twilight-muted shrink-0 mt-0.5">
+              <i data-lucide="sparkles" class="w-4 h-4 text-terracotta"></i>
+            </div>
+            <div class="text-xs space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="font-serif italic font-semibold text-parchment-900 dark:text-white">Autumn Status &bull; Currently</span>
+                <span class="text-[10px] tracking-widest uppercase text-olive dark:text-twilight-muted">Living in Kyoto</span>
+              </div>
+              <p class="text-parchment-800/70 dark:text-twilight-muted leading-relaxed font-sans">
+                Reading Mary Oliver's selected poems, learning sourdough hydration balance, enjoying Earl Grey with oat milk, and taking dusk walks through the cedar woods.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16" id="journal">
+      
+      <!-- Section Header & Filter Tabs -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between pb-8 border-b border-parchment-200 dark:border-twilight-border gap-6">
+        <div>
+          <span class="text-xs font-serif italic text-terracotta tracking-wider uppercase block mb-1">Chapter Index</span>
+          <h2 class="font-serif text-2xl sm:text-3xl text-parchment-900 dark:text-white">Reflections & Journal Logs</h2>
+          <p class="text-xs text-olive dark:text-twilight-muted mt-1">Essays on stillness, travel notebooks, and morning routines.</p>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar text-xs font-sans" id="categoryTabs">
+          <!-- Injected via JavaScript -->
+        </div>
+      </div>
+
+      <!-- Journal Cards Grid -->
+      <div id="journalGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-10">
+        <!-- Rendered dynamically via JavaScript -->
+      </div>
+
+      <!-- No Results Feedback -->
+      <div id="noJournalResults" class="hidden text-center py-20">
+        <i data-lucide="compass" class="w-10 h-10 text-olive dark:text-twilight-muted mx-auto mb-3 opacity-60"></i>
+        <h4 class="font-serif text-lg text-parchment-900 dark:text-white">No journal entries found</h4>
+        <p class="text-xs text-olive dark:text-twilight-muted mt-1">Try another search term or click another category tab.</p>
+        <button onclick="resetFilters()" class="mt-4 px-4 py-1.5 rounded-full bg-parchment-200 dark:bg-twilight-card text-xs text-parchment-900 dark:text-white hover:bg-terracotta hover:text-white transition-colors">
+          Reset Filter
+        </button>
+      </div>
+
+    </section>
+
+    <section class="border-t border-b border-parchment-200 dark:border-twilight-border bg-parchment-100/50 dark:bg-twilight-base/40 py-16" id="moments">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        let currentTestimonial = 0;
-        const testimonialElement = document.querySelector('.testimonial');
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between pb-8 gap-3">
+          <div>
+            <span class="text-xs font-serif italic text-olive dark:text-twilight-muted tracking-wider uppercase block mb-1">Visual Log</span>
+            <h2 class="font-serif text-2xl sm:text-3xl text-parchment-900 dark:text-white">Polaroids & Light Traces</h2>
+            <p class="text-xs text-olive dark:text-twilight-muted mt-0.5">Grainy 35mm fragments, steam rising from cups, and sun-drenched corners.</p>
+          </div>
+          <span class="text-xs font-serif italic text-olive dark:text-twilight-muted">Click photo to view memory</span>
+        </div>
+
+        <!-- Polaroid Photos Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-2" id="polaroidsGrid">
+          <!-- Rendered via JS -->
+        </div>
+
+      </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16" id="tracker">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
         
-        function rotateTestimonial() {
-            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-            updateTestimonial();
+        <!-- Left: Interactive Mindful Log Widget -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="p-6 sm:p-8 rounded-3xl border border-parchment-200 dark:border-twilight-border bg-white dark:bg-twilight-card shadow-soft">
+            <div class="flex items-center justify-between pb-5 border-b border-parchment-200 dark:border-twilight-border">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full bg-terracotta-light dark:bg-terracotta/20 flex items-center justify-center text-terracotta">
+                  <i data-lucide="feather" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <h3 class="font-serif text-lg text-parchment-900 dark:text-white font-medium">Daily Presence & Habit Log</h3>
+                  <p class="text-xs text-olive dark:text-twilight-muted">Private scratchpad stored directly in your browser.</p>
+                </div>
+              </div>
+              <span id="trackerDateDisplay" class="text-xs font-serif italic text-olive dark:text-twilight-muted">Today</span>
+            </div>
+
+            <!-- Mood Selector -->
+            <div class="pt-5 space-y-3">
+              <label class="text-xs font-sans uppercase tracking-wider text-parchment-800 dark:text-twilight-muted font-medium block">
+                How does your inner weather feel today?
+              </label>
+              <div class="grid grid-cols-5 gap-2 text-center text-xs" id="moodButtonsContainer">
+                <button onclick="setMood('Calm', '🍃')" data-mood="Calm" class="mood-btn p-2.5 rounded-2xl border border-parchment-200 dark:border-twilight-border hover:border-terracotta transition-all flex flex-col items-center gap-1 bg-parchment-50 dark:bg-twilight-base">
+                  <span class="text-lg">🍃</span>
+                  <span class="text-[11px]">Calm</span>
+                </button>
+                <button onclick="setMood('Inspired', '✨')" data-mood="Inspired" class="mood-btn p-2.5 rounded-2xl border border-parchment-200 dark:border-twilight-border hover:border-terracotta transition-all flex flex-col items-center gap-1 bg-parchment-50 dark:bg-twilight-base">
+                  <span class="text-lg">✨</span>
+                  <span class="text-[11px]">Inspired</span>
+                </button>
+                <button onclick="setMood('Restful', '☁️')" data-mood="Restful" class="mood-btn p-2.5 rounded-2xl border border-parchment-200 dark:border-twilight-border hover:border-terracotta transition-all flex flex-col items-center gap-1 bg-parchment-50 dark:bg-twilight-base">
+                  <span class="text-lg">☁️</span>
+                  <span class="text-[11px]">Restful</span>
+                </button>
+                <button onclick="setMood('Melancholic', '🌧️')" data-mood="Melancholic" class="mood-btn p-2.5 rounded-2xl border border-parchment-200 dark:border-twilight-border hover:border-terracotta transition-all flex flex-col items-center gap-1 bg-parchment-50 dark:bg-twilight-base">
+                  <span class="text-lg">🌧️</span>
+                  <span class="text-[11px]">Quiet</span>
+                </button>
+                <button onclick="setMood('Grateful', '🍂')" data-mood="Grateful" class="mood-btn p-2.5 rounded-2xl border border-parchment-200 dark:border-twilight-border hover:border-terracotta transition-all flex flex-col items-center gap-1 bg-parchment-50 dark:bg-twilight-base">
+                  <span class="text-lg">🍂</span>
+                  <span class="text-[11px]">Grateful</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Habit Counters: Hydration & Morning Brews -->
+            <div class="grid grid-cols-2 gap-4 pt-5">
+              <div class="p-3.5 rounded-2xl bg-parchment-50 dark:bg-twilight-base border border-parchment-200 dark:border-twilight-border flex items-center justify-between">
+                <div>
+                  <span class="text-[11px] uppercase tracking-wide text-olive dark:text-twilight-muted block">Water Glasses</span>
+                  <span id="waterCounter" class="font-serif text-xl font-medium text-parchment-900 dark:text-white">0 / 8</span>
+                </div>
+                <div class="flex items-center gap-1">
+                  <button onclick="adjustHabit('water', -1)" class="w-7 h-7 rounded-full border border-parchment-200 dark:border-twilight-border hover:bg-parchment-200 dark:hover:bg-twilight-border flex items-center justify-center text-xs">-</button>
+                  <button onclick="adjustHabit('water', 1)" class="w-7 h-7 rounded-full bg-olive text-white flex items-center justify-center text-xs">+</button>
+                </div>
+              </div>
+
+              <div class="p-3.5 rounded-2xl bg-parchment-50 dark:bg-twilight-base border border-parchment-200 dark:border-twilight-border flex items-center justify-between">
+                <div>
+                  <span class="text-[11px] uppercase tracking-wide text-olive dark:text-twilight-muted block">Warm Brews</span>
+                  <span id="teaCounter" class="font-serif text-xl font-medium text-parchment-900 dark:text-white">0 / 3</span>
+                </div>
+                <div class="flex items-center gap-1">
+                  <button onclick="adjustHabit('tea', -1)" class="w-7 h-7 rounded-full border border-parchment-200 dark:border-twilight-border hover:bg-parchment-200 dark:hover:bg-twilight-border flex items-center justify-center text-xs">-</button>
+                  <button onclick="adjustHabit('tea', 1)" class="w-7 h-7 rounded-full bg-terracotta text-white flex items-center justify-center text-xs">+</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Note Scratchpad -->
+            <div class="pt-5 space-y-2">
+              <label class="text-xs font-sans uppercase tracking-wider text-parchment-800 dark:text-twilight-muted font-medium flex items-center justify-between">
+                <span>One gratitude or thought from this morning:</span>
+                <span id="saveIndicator" class="text-[10px] text-olive font-serif italic hidden">saved</span>
+              </label>
+              <textarea 
+                id="quickJournalInput" 
+                rows="3" 
+                placeholder="The sun cast amber squares across the kitchen floor while the water boiled..."
+                class="w-full p-3.5 rounded-2xl border border-parchment-200 dark:border-twilight-border bg-parchment-50 dark:bg-twilight-base text-xs font-sans text-parchment-900 dark:text-white focus:outline-none focus:border-terracotta transition-colors leading-relaxed"
+                oninput="saveScratchpad(this.value)"
+              ></textarea>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right: About the Author & Current Pleasures -->
+        <div class="lg:col-span-5 space-y-6" id="about">
+          
+          <div class="p-6 sm:p-7 rounded-3xl border border-parchment-200 dark:border-twilight-border bg-white dark:bg-twilight-card shadow-soft space-y-5">
+            <div class="flex items-center gap-4">
+              <img 
+                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" 
+                alt="Elena Vance" 
+                class="w-16 h-16 rounded-full object-cover border-2 border-parchment-200 dark:border-twilight-border shadow-sm"
+              />
+              <div>
+                <h3 class="font-serif text-xl text-parchment-900 dark:text-white font-medium">Elena Vance</h3>
+                <p class="text-xs text-olive dark:text-twilight-muted font-serif italic">Essayist, tea drinker, and analog archivist</p>
+                <div class="flex items-center gap-2 mt-1 text-[11px] text-terracotta">
+                  <i data-lucide="map-pin" class="w-3 h-3"></i>
+                  <span>Between Kyoto & Pacific Coast</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-xs text-parchment-800/80 dark:text-twilight-muted leading-relaxed font-sans">
+              I document gentle living, intentional domestic rituals, seasonal cooking, and the beauty of slowing down in an over-accelerated world. Thank you for walking through this quiet garden with me.
+            </p>
+
+            <!-- Curated Recommendations List -->
+            <div class="pt-2 border-t border-parchment-200 dark:border-twilight-border space-y-3">
+              <span class="text-[10px] tracking-widest uppercase text-olive dark:text-twilight-muted font-medium block">
+                Current Companions
+              </span>
+              
+              <div class="flex items-center gap-3 text-xs">
+                <i data-lucide="book" class="w-4 h-4 text-terracotta shrink-0"></i>
+                <div>
+                  <span class="font-serif italic font-medium text-parchment-900 dark:text-white">Upstream</span>
+                  <span class="text-parchment-800/60 dark:text-twilight-muted"> — Mary Oliver</span>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3 text-xs">
+                <i data-lucide="music" class="w-4 h-4 text-olive shrink-0"></i>
+                <div>
+                  <span class="font-serif italic font-medium text-parchment-900 dark:text-white">Promises</span>
+                  <span class="text-parchment-800/60 dark:text-twilight-muted"> — Floating Points & Pharoah Sanders</span>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3 text-xs">
+                <i data-lucide="cup-soda" class="w-4 h-4 text-terracotta shrink-0"></i>
+                <div>
+                  <span class="font-serif italic font-medium text-parchment-900 dark:text-white">Roasted Hojicha</span>
+                  <span class="text-parchment-800/60 dark:text-twilight-muted"> — Ippodo Tea Kyoto</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Quiet Letterbox / Newsletter Box -->
+          <div class="p-6 rounded-3xl border border-terracotta/30 bg-terracotta-light/40 dark:bg-twilight-card space-y-3">
+            <div class="flex items-center gap-2 text-terracotta">
+              <i data-lucide="mail" class="w-4 h-4"></i>
+              <span class="text-xs tracking-wider uppercase font-semibold">The Sunday Dispatch</span>
+            </div>
+            <h4 class="font-serif text-base text-parchment-900 dark:text-white font-medium">Letters from the Wooden Desk</h4>
+            <p class="text-xs text-parchment-800/70 dark:text-twilight-muted leading-relaxed">
+              Every alternating Sunday, I write a gentle letter with one recipe, three book quotes, and reflections from my field journal. No spam, ever.
+            </p>
+            <form onsubmit="handleSubscribe(event)" class="flex gap-2 pt-1">
+              <input 
+                type="email" 
+                required 
+                placeholder="Your gentle email address..." 
+                class="flex-1 px-3.5 py-2 rounded-xl text-xs bg-white dark:bg-twilight-base border border-parchment-200 dark:border-twilight-border text-parchment-900 dark:text-white focus:outline-none focus:border-terracotta"
+              />
+              <button type="submit" class="px-4 py-2 rounded-xl bg-terracotta hover:bg-terracotta-dark text-white text-xs font-sans font-medium transition-colors">
+                Receive
+              </button>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-parchment-200 dark:border-twilight-border bg-parchment-100/70 dark:bg-twilight-card/40 py-12 text-xs font-sans text-olive dark:text-twilight-muted transition-colors">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full border border-terracotta/40 flex items-center justify-center text-terracotta">
+            <i data-lucide="sun" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <span class="font-serif text-base text-parchment-900 dark:text-white font-medium block">Solitude & Sunlight</span>
+            <span class="text-[10px] tracking-wider uppercase">Quiet Living &bull; Handcrafted Reflections</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-6 text-xs">
+          <a href="#journal" class="hover:text-terracotta transition-colors">Journal Index</a>
+          <a href="#moments" class="hover:text-terracotta transition-colors">Photographs</a>
+          <a href="#about" class="hover:text-terracotta transition-colors">About</a>
+          <a href="javascript:void(0)" onclick="copyFeed()" class="hover:text-terracotta transition-colors">RSS Feed</a>
+        </div>
+      </div>
+
+      <div class="border-t border-parchment-200 dark:border-twilight-border/60 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px]">
+        <p>&copy; 2026 Elena Vance. All photographs and essays preserved under quiet copyright. Built with pure love for the analog world.</p>
+        <p class="font-serif italic text-olive dark:text-twilight-muted">"Dwell in possibility."</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <div id="articleModal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div class="bg-parchment-50 dark:bg-twilight-card border border-parchment-200 dark:border-twilight-border rounded-3xl max-w-2xl w-full max-h-[92vh] overflow-y-auto shadow-2xl relative my-auto">
+      
+      <!-- Sticky Modal Top Nav -->
+      <div class="sticky top-0 z-20 bg-parchment-50/95 dark:bg-twilight-card/95 backdrop-blur-md px-6 py-4 border-b border-parchment-200 dark:border-twilight-border flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span id="modalCategoryBadge" class="text-[10px] tracking-widest uppercase px-2.5 py-0.5 rounded-full bg-terracotta-light dark:bg-terracotta/20 text-terracotta font-medium">
+            Category
+          </span>
+          <span id="modalReadTime" class="text-xs font-serif italic text-olive dark:text-twilight-muted">
+            5 min read
+          </span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <!-- Article Heart Counter -->
+          <button onclick="likeArticle()" class="px-3 py-1.5 rounded-full border border-parchment-200 dark:border-twilight-border hover:border-terracotta text-xs flex items-center gap-1.5 text-parchment-800 dark:text-twilight-text transition-colors">
+            <i data-lucide="heart" id="modalHeartIcon" class="w-3.5 h-3.5 text-terracotta"></i>
+            <span id="modalLikesCount">24</span>
+          </button>
+
+          <button onclick="copyArticleLink()" class="p-2 rounded-full border border-parchment-200 dark:border-twilight-border hover:border-terracotta text-xs text-parchment-800 dark:text-twilight-text transition-colors" title="Share link">
+            <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+          </button>
+
+          <button onclick="closeArticleModal()" class="w-8 h-8 rounded-full border border-parchment-200 dark:border-twilight-border hover:bg-parchment-200 dark:hover:bg-twilight-border flex items-center justify-center text-parchment-800 dark:text-twilight-text transition-colors">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body Content -->
+      <div class="p-6 sm:p-10 space-y-6">
+        
+        <!-- Header Banner Image -->
+        <div class="rounded-2xl overflow-hidden aspect-[16/9] w-full border border-parchment-200 dark:border-twilight-border">
+          <img id="modalHeroImage" src="" alt="" class="w-full h-full object-cover"/>
+        </div>
+
+        <!-- Title & Epigraph -->
+        <div class="space-y-3 pb-6 border-b border-parchment-200 dark:border-twilight-border">
+          <div class="flex items-center gap-3 text-xs text-olive dark:text-twilight-muted font-sans">
+            <span id="modalDate">October 6, 2026</span>
+            <span>&bull;</span>
+            <span id="modalAuthor">Elena Vance</span>
+          </div>
+          <h1 id="modalTitle" class="font-serif text-2xl sm:text-4xl text-parchment-900 dark:text-white font-normal leading-snug">
+            Article Title Placeholder
+          </h1>
+          <p id="modalSubtitle" class="font-serif italic text-base text-parchment-800/80 dark:text-twilight-muted leading-relaxed">
+            Subtitle abstract preview text.
+          </p>
+        </div>
+
+        <!-- Rendered Essay Body -->
+        <div id="modalBody" class="text-sm font-sans leading-relaxed text-parchment-900/90 dark:text-twilight-text space-y-4">
+          <!-- Populated via dynamic content -->
+        </div>
+
+        <!-- Modal End Note -->
+        <div class="pt-6 mt-8 border-t border-parchment-200 dark:border-twilight-border flex items-center justify-between text-xs">
+          <span class="font-serif italic text-olive dark:text-twilight-muted">Written with fountain pen on Midori MD Paper</span>
+          <button onclick="closeArticleModal()" class="px-4 py-2 rounded-full bg-parchment-200 dark:bg-twilight-base text-parchment-900 dark:text-white hover:bg-terracotta hover:text-white transition-colors">
+            Close Reflection
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Photo Lightbox Modal -->
+  <div id="photoLightbox" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-4" onclick="closePhotoLightbox()">
+    <div class="max-w-xl w-full bg-white dark:bg-twilight-card p-4 pb-6 rounded-2xl shadow-2xl relative" onclick="event.stopPropagation()">
+      <button onclick="closePhotoLightbox()" class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-parchment-900 text-white flex items-center justify-center text-xs">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+      <div class="aspect-square rounded-xl overflow-hidden mb-4">
+        <img id="lightboxImg" src="" alt="Enlarged Polaroid" class="w-full h-full object-cover"/>
+      </div>
+      <p id="lightboxCaption" class="font-serif italic text-center text-parchment-900 dark:text-white text-base"></p>
+      <p id="lightboxLocation" class="text-[11px] text-center text-olive dark:text-twilight-muted uppercase tracking-widest mt-1"></p>
+    </div>
+  </div>
+
+  <!-- Toast Feedback Indicator -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 hidden px-4 py-2.5 rounded-2xl bg-parchment-900 text-white dark:bg-white dark:text-twilight-base text-xs font-sans shadow-lg flex items-center gap-2">
+    <i data-lucide="check" class="w-3.5 h-3.5 text-terracotta"></i>
+    <span id="toastMsg">Action complete</span>
+  </div>
+
+  <script>
+    // Categories Definition
+    const CATEGORIES = [
+      "All Entries",
+      "Daily Musings",
+      "Morning & Evening",
+      "Coffee & Recipes",
+      "Travel & Wandering",
+      "Mindful Notes"
+    ];
+
+    // Curated Journal Entries
+    const journalEntries = [
+      {
+        id: "entry-1",
+        title: "The Architecture of a Quiet Morning: Kettle, Pen, and Early Light",
+        subtitle: "Why the first thirty minutes after waking determine the geometry of our thoughts.",
+        category: "Morning & Evening",
+        date: "October 7, 2026",
+        readTime: "5 min read",
+        author: "Elena Vance",
+        likes: 42,
+        image: "https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=800&q=80",
+        excerpt: "Before the digital world calls with notifications and urgency, there exists a fragile, velvet silence that belongs only to the steam above the cup...",
+        content: `
+          <p>The dawn does not arrive in a rush; it filters through the paper shoji screen with the gentleness of unhurried breathing. For the past three autumns, I have maintained an unbroken pact with myself: before glancing at any blue-lit screen, I boil water in a hammered copper kettle.</p>
+          
+          <blockquote class="my-5 pl-4 border-l-2 border-terracotta font-serif italic text-parchment-800 dark:text-twilight-muted text-base">
+            "To be alive in this world, you must be capable of three things: to love what is mortal; to hold it against your bones knowing your own life depends upon it; and, when the time comes to let it go, to let it go."
+          </blockquote>
+
+          <h3 class="font-serif text-lg font-medium text-parchment-900 dark:text-white mt-4 mb-2">The Geometry of Unrushed Seconds</h3>
+          <p>I measure 18 grams of washed Ethiopian coffee, grinding it by hand until the kitchen fills with aromas of dried bergamot and jasmine blossoms. As the water spirals down the ceramic dripper, the clock pauses.</p>
+
+          <p>In those 15 minutes of slow pouring, the mind organizes itself without force. Ideas surface not because they were pushed, but because room was made for them to gently breathe.</p>
+          
+          <h3 class="font-serif text-lg font-medium text-parchment-900 dark:text-white mt-4 mb-2">My Morning Checklist</h3>
+          <ul class="list-disc pl-5 space-y-1.5 text-xs text-olive dark:text-twilight-muted">
+            <li>Open the south-facing window to invite the crisp autumn breeze.</li>
+            <li>Write three unedited stream-of-consciousness lines into the field journal.</li>
+            <li>Drink 300ml of room-temperature spring water before coffee.</li>
+          </ul>
+        `
+      },
+      {
+        id: "entry-2",
+        title: "On Sourdough Hydration and the Lessons of Slow Fermentation",
+        subtitle: "What four months of baking wild yeast loaves taught me about patience and giving things time to rest.",
+        category: "Coffee & Recipes",
+        date: "October 3, 2026",
+        readTime: "7 min read",
+        author: "Elena Vance",
+        likes: 38,
+        image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
+        excerpt: "Flour, well water, wild airborne spores, and salt. You cannot command a dough to rise faster without sacrificing the deep honeycomb crumb...",
+        content: `
+          <p>Modern culture celebrates velocity. We want instant answers, overnight career breakthroughs, and accelerated learning. Bread, however, refuses to participate in such illusions.</p>
+
+          <p>When working with an 78% hydration sourdough, you quickly learn that tension and rest are two halves of the same circle. Every 30 minutes, you perform gentle stretch-and-folds, aligning gluten strands without tearing the fragile matrix.</p>
+
+          <h3 class="font-serif text-lg font-medium text-parchment-900 dark:text-white mt-4 mb-2">Autumn Country Loaf Formula</h3>
+          <p>For those curious about starting their own jar on the kitchen counter:</p>
+          <div class="p-4 rounded-xl bg-parchment-100 dark:bg-twilight-base border border-parchment-200 dark:border-twilight-border font-serif text-xs space-y-1">
+            <p><strong>Hard Red Spring Flour:</strong> 350g (80%)</p>
+            <p><strong>Stoneground Whole Spelt:</strong> 90g (20%)</p>
+            <p><strong>Filtered Water (26°C):</strong> 340g (78%)</p>
+            <p><strong>Mature Sourdough Starter:</strong> 90g (20%)</p>
+            <p><strong>Fine Sea Salt:</strong> 9g (2%)</p>
+          </div>
+
+          <p class="mt-3">When the loaf emerges from the cast-iron dutch oven with a blistered mahogany crust, the sound of the crust 'singing' as it cools is the sweetest song of the week.</p>
+        `
+      },
+      {
+        id: "entry-3",
+        title: "Wandering Through the Moss Gardens of Arashiyama in the Rain",
+        subtitle: "How carrying an umbrella with no destination reveals the hidden green layers of the world.",
+        category: "Travel & Wandering",
+        date: "September 27, 2026",
+        readTime: "6 min read",
+        author: "Elena Vance",
+        likes: 56,
+        image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80",
+        excerpt: "Most travelers flee when the sky turns slate grey. But when rain falls over the bamboo and moss temples, the greens awaken with an emerald intensity...",
+        content: `
+          <p>Rain is the ultimate editor of landscape. It softens harsh contrasts, hushes crowds, and replaces the chatter of tourist avenues with the rhythmic patter on stone lanterns.</p>
+          
+          <p>Walking through Gio-ji temple under an olive wax-canvas umbrella, one sees more than forty distinct species of moss clinging to roots, granite stone steps, and fallen cedar branches. To spend an hour just looking at different shades of emerald is a form of meditation that costs nothing.</p>
+
+          <blockquote class="my-5 pl-4 border-l-2 border-olive font-serif italic text-parchment-800 dark:text-twilight-muted text-base">
+            "The world is full of magical things patiently waiting for our wits to grow sharper."
+          </blockquote>
+
+          <p>We ended the walk in an old wooden soba house tucked near the river, listening to the rain drip from the cedar eaves while dipping hot buckwheat noodles into dashi broth.</p>
+        `
+      },
+      {
+        id: "entry-4",
+        title: "The Analog Desk: Living with Midori Paper and Fountain Pens",
+        subtitle: "Why ink on paper anchors our memory in ways that digital cloud notes will never match.",
+        category: "Daily Musings",
+        date: "September 18, 2026",
+        readTime: "4 min read",
+        author: "Elena Vance",
+        likes: 64,
+        image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80",
+        excerpt: "A digital note is sterile; an ink smudge on cream paper preserves the humidity of the afternoon you wrote it...",
+        content: `
+          <p>Every keystroke on a glass screen feels identical. Typing 'I love you' requires the exact same physical motion as entering an OTP security code. But a fountain pen insists on tactile intimacy.</p>
+          <p>The nib catches gently on the cotton fibers of Japanese MD paper. The ink—I am fond of Sailor's Yama-dori, a deep teal with hints of copper sheen—flows according to gravity and hand pressure.</p>
+          <p>When you look back through journals from five years ago, you don't merely read the words; you remember the room, the scent of the tea, the angle of the sun through the blinds.</p>
+        `
+      },
+      {
+        id: "entry-5",
+        title: "Autumn Evening Routines: Amber Lighting, Warm Socks, and Books",
+        subtitle: "Softening the boundary between productive daytime hours and restorative sleep.",
+        category: "Morning & Evening",
+        date: "September 10, 2026",
+        readTime: "5 min read",
+        author: "Elena Vance",
+        likes: 31,
+        image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&q=80",
+        excerpt: "At 8:30 PM, all overhead lights are extinguished. Only low-wattage paper lamps and beeswax candles remain...",
+        content: `
+          <p>Biologically, our eyes were never meant to gaze into midday sun at ten at night. By dimming light sources to low amber angles, melatonin releases naturally without pharmaceuticals.</p>
+          <p>My evening sequence is simple: warm wool slippers, a ceramic mug of valerian and chamomile, 30 minutes with a physical book, and no screens within reaching distance of the mattress.</p>
+        `
+      },
+      {
+        id: "entry-6",
+        title: "Practicing Voluntary Solitude: The Difference Between Lonely and Alone",
+        subtitle: "How learning to be your own quiet companion turns empty hours into fertile soil.",
+        category: "Mindful Notes",
+        date: "September 02, 2026",
+        readTime: "6 min read",
+        author: "Elena Vance",
+        likes: 72,
+        image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=80",
+        excerpt: "Loneliness is the agonizing feeling of lack; solitude is the joyous fullness of having arrived home in your own presence...",
+        content: `
+          <p>Many people dread being alone in an apartment on a Saturday evening. The absence of chatter feels like an interrogation. Yet when you cross that threshold, solitude transforms from an empty room into an expansive sanctuary.</p>
+          <p>In solitude, you do not have to perform. You do not have to curate your facial expression, anticipate anyone's needs, or explain your silence. You simply are.</p>
+        `
+      }
+    ];
+
+    // Polaroid Gallery Data
+    const polaroidMemories = [
+      {
+        img: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=600&q=80",
+        caption: "Morning roast at Weekenders Coffee",
+        location: "Kyoto, Japan",
+        tilt: "polaroid-tilt-1"
+      },
+      {
+        img: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=600&q=80",
+        caption: "Reading under cedar branches",
+        location: "Kamo River Bank",
+        tilt: "polaroid-tilt-2"
+      },
+      {
+        img: "https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=600&q=80",
+        caption: "Warm sunlight through wooden blinds",
+        location: "Home Studio, 4 PM",
+        tilt: "polaroid-tilt-3"
+      },
+      {
+        img: "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=600&q=80",
+        caption: "Freshly baked spelt boule",
+        location: "Sunday Hearth",
+        tilt: "polaroid-tilt-4"
+      }
+    ];
+
+    // State Variables
+    let currentCategory = "All Entries";
+    let searchQuery = "";
+    let activeArticleId = null;
+    let habitData = {
+      water: 0,
+      tea: 0,
+      mood: "Calm",
+      moodEmoji: "🍃",
+      note: ""
+    };
+
+    // Web Audio Synthesized Lo-Fi Rain & Brown Noise Generator
+    let audioCtx = null;
+    let isAmbientPlaying = false;
+    let rainGainNode = null;
+    let noiseNode = null;
+
+    function toggleAmbientAudio() {
+      if (!isAmbientPlaying) {
+        startAmbientAudio();
+      } else {
+        stopAmbientAudio();
+      }
+    }
+
+    function startAmbientAudio() {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!audioCtx) audioCtx = new AudioContext();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        // Create buffer with brown noise for soft steady rain
+        const bufferSize = audioCtx.sampleRate * 2;
+        const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        let lastOut = 0.0;
+        for (let i = 0; i < bufferSize; i++) {
+          const white = Math.random() * 2 - 1;
+          output[i] = (lastOut + (0.02 * white)) / 1.02;
+          lastOut = output[i];
+          output[i] *= 3.5; // Gain compensation
         }
+
+        noiseNode = audioCtx.createBufferSource();
+        noiseNode.buffer = noiseBuffer;
+        noiseNode.loop = true;
+
+        // Bandpass Filter to emulate rainfall frequency spectrum
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(800, audioCtx.currentTime);
+
+        rainGainNode = audioCtx.createGain();
+        rainGainNode.gain.setValueAtTime(0.08, audioCtx.currentTime); // Gentle gentle volume
+
+        noiseNode.connect(filter);
+        filter.connect(rainGainNode);
+        rainGainNode.connect(audioCtx.destination);
+
+        noiseNode.start();
+        isAmbientPlaying = true;
+
+        document.getElementById('ambientAudioBtn').classList.add('border-terracotta', 'text-terracotta');
+        document.getElementById('ambientAudioText').innerText = "Rain: Active";
+        showToast("Ambient gentle rain playing via Web Audio");
+      } catch (e) {
+        console.warn("Web Audio API not supported or autoplay blocked", e);
+        showToast("Audio unavailable in this environment");
+      }
+    }
+
+    function stopAmbientAudio() {
+      if (noiseNode) {
+        try {
+          noiseNode.stop();
+          noiseNode.disconnect();
+        } catch (e) {}
+      }
+      isAmbientPlaying = false;
+      document.getElementById('ambientAudioBtn').classList.remove('border-terracotta', 'text-terracotta');
+      document.getElementById('ambientAudioText').innerText = "Rain Noise";
+      showToast("Ambient sound paused");
+    }
+
+    // Theme Management (Warm Paper vs Muted Twilight)
+    function initTheme() {
+      const savedTheme = localStorage.getItem('solitude_theme');
+      if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('solitude_theme', isDark ? 'dark' : 'light');
+      lucide.createIcons();
+    }
+
+    // Filter Buttons Rendering
+    function renderCategoryTabs() {
+      const container = document.getElementById('categoryTabs');
+      container.innerHTML = CATEGORIES.map(cat => {
+        const isActive = cat === currentCategory;
+        const activeClass = isActive 
+          ? "bg-terracotta text-white border-terracotta shadow-sm"
+          : "bg-parchment-100 dark:bg-twilight-card text-parchment-800 dark:text-twilight-muted border-parchment-200 dark:border-twilight-border hover:border-terracotta";
         
-        function updateTestimonial() {
-            const testimonial = testimonials[currentTestimonial];
-            testimonialElement.innerHTML = `
-                <div class="testimonial-text">"${testimonial.text}"</div>
-                <div class="testimonial-author">
-                    <div class="author-avatar">${testimonial.initials}</div>
-                    <div class="author-info">
-                        <h4>${testimonial.name}</h4>
-                        <p>${testimonial.position}</p>
-                    </div>
-                </div>
-            `;
+        return `
+          <button 
+            onclick="setCategory('${cat}')" 
+            class="px-3 py-1.5 rounded-full border text-xs whitespace-nowrap transition-all ${activeClass}">
+            ${cat}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function setCategory(cat) {
+      currentCategory = cat;
+      renderCategoryTabs();
+      renderJournal();
+    }
+
+    function handleSearch(val) {
+      searchQuery = val.trim().toLowerCase();
+      renderJournal();
+    }
+
+    function resetFilters() {
+      currentCategory = "All Entries";
+      searchQuery = "";
+      const searchBox = document.getElementById('searchInput');
+      if (searchBox) searchBox.value = "";
+      renderCategoryTabs();
+      renderJournal();
+    }
+
+    // Journal Card Grid Rendering
+    function renderJournal() {
+      const grid = document.getElementById('journalGrid');
+      const emptyState = document.getElementById('noJournalResults');
+
+      let filtered = journalEntries.filter(entry => {
+        const matchesCat = currentCategory === "All Entries" || entry.category === currentCategory;
+        const matchesSearch = entry.title.toLowerCase().includes(searchQuery) ||
+                              entry.excerpt.toLowerCase().includes(searchQuery) ||
+                              entry.subtitle.toLowerCase().includes(searchQuery);
+        return matchesCat && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = "";
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      grid.innerHTML = filtered.map(entry => `
+        <article class="bg-white dark:bg-twilight-card rounded-3xl border border-parchment-200 dark:border-twilight-border overflow-hidden shadow-soft hover:shadow-lg transition-all duration-300 flex flex-col justify-between group">
+          <div>
+            <!-- Image Frame -->
+            <div class="aspect-[16/10] overflow-hidden relative cursor-pointer" onclick="openArticleModal('${entry.id}')">
+              <img 
+                src="${entry.image}" 
+                alt="${entry.title}"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+              <span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-white/90 dark:bg-twilight-base/90 backdrop-blur-sm text-[10px] tracking-wider uppercase font-medium text-parchment-900 dark:text-white border border-parchment-200 dark:border-twilight-border">
+                ${entry.category}
+              </span>
+            </div>
+
+            <!-- Card Body -->
+            <div class="p-6 space-y-3">
+              <div class="flex items-center gap-2 text-xs text-olive dark:text-twilight-muted font-sans">
+                <span>${entry.date}</span>
+                <span>&bull;</span>
+                <span class="font-serif italic">${entry.readTime}</span>
+              </div>
+
+              <h3 
+                onclick="openArticleModal('${entry.id}')"
+                class="font-serif text-xl sm:text-2xl text-parchment-900 dark:text-white font-normal group-hover:text-terracotta transition-colors cursor-pointer leading-snug">
+                ${entry.title}
+              </h3>
+
+              <p class="text-xs text-parchment-800/80 dark:text-twilight-muted leading-relaxed line-clamp-3 font-sans">
+                ${entry.excerpt}
+              </p>
+            </div>
+          </div>
+
+          <!-- Card Bottom Action -->
+          <div class="p-6 pt-0 flex items-center justify-between border-t border-parchment-100 dark:border-twilight-border/60 mt-4 pt-4 text-xs font-sans">
+            <span class="flex items-center gap-1.5 text-olive dark:text-twilight-muted">
+              <i data-lucide="heart" class="w-3.5 h-3.5 text-terracotta"></i>
+              <span>${entry.likes} quiet loves</span>
+            </span>
+
+            <button 
+              onclick="openArticleModal('${entry.id}')" 
+              class="font-serif italic text-terracotta hover:text-terracotta-dark flex items-center gap-1 text-sm transition-colors">
+              <span>Read Entry</span>
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </article>
+      `).join('');
+
+      lucide.createIcons();
+    }
+
+    // Article Modal Reader Logic
+    function openArticleModal(id) {
+      const entry = journalEntries.find(e => e.id === id);
+      if (!entry) return;
+      activeArticleId = id;
+
+      document.getElementById('modalCategoryBadge').innerText = entry.category;
+      document.getElementById('modalReadTime').innerText = entry.readTime;
+      document.getElementById('modalHeroImage').src = entry.image;
+      document.getElementById('modalDate').innerText = entry.date;
+      document.getElementById('modalAuthor').innerText = entry.author;
+      document.getElementById('modalTitle').innerText = entry.title;
+      document.getElementById('modalSubtitle').innerText = entry.subtitle;
+      document.getElementById('modalBody').innerHTML = entry.content;
+      document.getElementById('modalLikesCount').innerText = entry.likes;
+
+      document.getElementById('articleModal').classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+      lucide.createIcons();
+    }
+
+    function closeArticleModal() {
+      document.getElementById('articleModal').classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    function likeArticle() {
+      const entry = journalEntries.find(e => e.id === activeArticleId);
+      if (entry) {
+        entry.likes += 1;
+        document.getElementById('modalLikesCount').innerText = entry.likes;
+        document.getElementById('modalHeartIcon').classList.add('fill-current');
+        renderJournal();
+        showToast("Heart added to this reflection");
+      }
+    }
+
+    function copyArticleLink() {
+      copyToClipboard(window.location.href, "Reflection link copied to clipboard");
+    }
+
+    // Polaroid Gallery Rendering
+    function renderPolaroids() {
+      const grid = document.getElementById('polaroidsGrid');
+      grid.innerHTML = polaroidMemories.map((pol, idx) => `
+        <div 
+          onclick="openPhotoLightbox(${idx})" 
+          class="bg-white dark:bg-twilight-card p-3 pb-5 rounded-2xl shadow-polaroid border border-parchment-200 dark:border-twilight-border cursor-pointer transition-transform duration-300 hover:scale-105 ${pol.tilt}">
+          <div class="aspect-square rounded-xl overflow-hidden mb-3">
+            <img src="${pol.img}" alt="${pol.caption}" class="w-full h-full object-cover" loading="lazy"/>
+          </div>
+          <div class="text-center space-y-0.5">
+            <p class="font-serif italic text-xs text-parchment-900 dark:text-white line-clamp-1">${pol.caption}</p>
+            <p class="text-[9px] uppercase tracking-wider text-olive dark:text-twilight-muted">${pol.location}</p>
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    function openPhotoLightbox(index) {
+      const pol = polaroidMemories[index];
+      if (!pol) return;
+      document.getElementById('lightboxImg').src = pol.img;
+      document.getElementById('lightboxCaption').innerText = pol.caption;
+      document.getElementById('lightboxLocation').innerText = pol.location;
+      document.getElementById('photoLightbox').classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+      lucide.createIcons();
+    }
+
+    function closePhotoLightbox() {
+      document.getElementById('photoLightbox').classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    // Habit & Mindful Tracker with localStorage Persistence
+    function initHabitTracker() {
+      const saved = localStorage.getItem('solitude_habits');
+      if (saved) {
+        try {
+          habitData = JSON.parse(saved);
+        } catch (e) {}
+      }
+      updateHabitUI();
+
+      // Show formatted current day
+      const today = new Date();
+      const options = { weekday: 'long', month: 'short', day: 'numeric' };
+      const dateStr = today.toLocaleDateString('en-US', options);
+      const dateEl = document.getElementById('trackerDateDisplay');
+      if (dateEl) dateEl.innerText = dateStr;
+    }
+
+    function adjustHabit(type, delta) {
+      if (type === 'water') {
+        habitData.water = Math.max(0, Math.min(12, (habitData.water || 0) + delta));
+      } else if (type === 'tea') {
+        habitData.tea = Math.max(0, Math.min(6, (habitData.tea || 0) + delta));
+      }
+      saveHabits();
+      updateHabitUI();
+    }
+
+    function setMood(mood, emoji) {
+      habitData.mood = mood;
+      habitData.moodEmoji = emoji;
+      saveHabits();
+      updateHabitUI();
+      showToast(`Mood recorded: ${mood} ${emoji}`);
+    }
+
+    function saveScratchpad(text) {
+      habitData.note = text;
+      saveHabits();
+      const indicator = document.getElementById('saveIndicator');
+      if (indicator) {
+        indicator.classList.remove('hidden');
+        setTimeout(() => indicator.classList.add('hidden'), 1500);
+      }
+    }
+
+    function saveHabits() {
+      localStorage.setItem('solitude_habits', JSON.stringify(habitData));
+    }
+
+    function updateHabitUI() {
+      document.getElementById('waterCounter').innerText = `${habitData.water || 0} / 8`;
+      document.getElementById('teaCounter').innerText = `${habitData.tea || 0} / 3`;
+      
+      const noteInput = document.getElementById('quickJournalInput');
+      if (noteInput && noteInput.value !== (habitData.note || '')) {
+        noteInput.value = habitData.note || '';
+      }
+
+      // Highlight active mood button
+      document.querySelectorAll('.mood-btn').forEach(btn => {
+        if (btn.getAttribute('data-mood') === habitData.mood) {
+          btn.classList.add('border-terracotta', 'bg-terracotta-light', 'dark:bg-twilight-card', 'font-medium');
+        } else {
+          btn.classList.remove('border-terracotta', 'bg-terracotta-light', 'dark:bg-twilight-card', 'font-medium');
         }
-        
-        // Auto-rotate testimonials every 5 seconds
-        setInterval(rotateTestimonial, 5000);
-        
-        // CTA button interactions
-        document.querySelectorAll('.cta-button').forEach(button => {
-            button.addEventListener('click', function() {
-                alert('Thank you for your interest in CodeFlow! You would be redirected to the signup page in a real implementation.');
-            });
-        });
-        
-        // Pricing card interactions
-        document.querySelectorAll('.pricing-card button').forEach(button => {
-            button.addEventListener('click', function() {
-                const planName = this.closest('.pricing-card').querySelector('.plan-name').textContent;
-                alert(`You selected the ${planName} plan. In a real implementation, you would be redirected to the checkout process.`);
-            });
-        });
-    </script>
+      });
+    }
+
+    // Newsletter Subscription Form Handler
+    function handleSubscribe(e) {
+      e.preventDefault();
+      showToast("Thank you. The Sunday Letter will arrive in your quiet inbox.");
+      e.target.reset();
+    }
+
+    function copyFeed() {
+      copyToClipboard('https://solitude-and-sunlight.blog/feed.xml', 'RSS Feed URL copied to clipboard');
+    }
+
+    // Generic Clipboard Helper
+    function copyToClipboard(text, msg) {
+      const temp = document.createElement('input');
+      temp.value = text;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+      showToast(msg);
+    }
+
+    // Toast Feedback Notification
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const msgEl = document.getElementById('toastMsg');
+      msgEl.innerText = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3200);
+    }
+
+    // Keyboard Shortcuts (ESC closes modals)
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeArticleModal();
+        closePhotoLightbox();
+      }
+    });
+
+    // Close Modal on backdrop click
+    document.getElementById('articleModal').addEventListener('click', function(e) {
+      if (e.target === this) closeArticleModal();
+    });
+
+    // Application Bootstrap
+    window.addEventListener('DOMContentLoaded', () => {
+      initTheme();
+      renderCategoryTabs();
+      renderJournal();
+      renderPolaroids();
+      initHabitTracker();
+      lucide.createIcons();
+    });
+  </script>
 </body>
 </html>
